@@ -3,8 +3,10 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 
-const uploadDir = path.join(__dirname, "..", "uploads");
-if (!fs.existsSync(uploadDir)) {
+const os = require("os");
+
+const uploadDir = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, "..", "uploads");
+if (!process.env.VERCEL && !fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
